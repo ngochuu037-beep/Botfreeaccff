@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: miguel-ff-bot
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: 8256418029:AAHWnLrQ_BfKVP9AT1PRaBaCET-RSbEULQU
+        sync: false
+      - key: ADMIN_IDS
+        value: "8432658618"
+      - key: DATABASE_URL          # ← thay vì DB_PATH
+        fromDatabase:
+          name: bot-db
+          property: connectionString
+
+databases:
+  - name: bot-db
+    plan: free
+    region: singapore
